@@ -5,11 +5,13 @@ import { styles } from '../Styles';
 
 export const HomeScreen = ({ route, navigation }) => {
 
-return (
-    <View style={[styles.container, styles.centered]}>
-      <Text style={[styles.h1]}>REPRODUCER HOME</Text>
-    </View>
-  )
+    console.log('HomeScreen ...')
+
+    return (
+        <View style={[styles.container, styles.centered]}>
+            <Text style={[styles.h1]}>REPRODUCER HOME...</Text>
+        </View>
+    )
 
 
 
