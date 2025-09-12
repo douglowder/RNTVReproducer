@@ -4,9 +4,13 @@ Demonstrating an issue on Android TV physical device, that a focused item does n
 
 ### NOTE / UPDATE: 
 
-- This DOES work on an Android TV emulator. (!!!)
-- Not working on physical Android TV box. Running Android TV OS 13. 
+- This DOES work on an Android TV emulator. (Running Android TV OS 13)
 
-(Though the intial focus of the first button on launch does not)
+- Not working on physical Android TV box. Running Android TV OS 13. 
+(* I'm not sure you can even buy Android 16 TV boxes yet)
+
+
+
+
 
 
