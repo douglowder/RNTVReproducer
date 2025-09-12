@@ -10,13 +10,13 @@ export const HomeScreen = ({ route, navigation }) => {
 
     const buttonsData: any = [
         {
-            title: 'Grid screen',
-            action: 'nav:GridScreen',
+            title: 'Screen One',
+            action: 'nav:ScreenOne',
             hasPreferredFocus: true
         },
         {
-            title: 'Detail screen',
-            action: 'nav:DetailScreen'
+            title: 'Screen Two',
+            action: 'nav:ScreenTwo'
         },
 
     ]
@@ -24,7 +24,7 @@ export const HomeScreen = ({ route, navigation }) => {
     return (
         <View style={[styles.container, {}]}>
             <Text style={[styles.h1]}>ISSUE REPRODUCER : HomeScreen</Text>
-            <TVFocusGuideView style={[{ marginTop: 20 * scaleModifier, display: 'flex', flexDirection:'row' }]}>
+            <TVFocusGuideView style={[{ marginTop: 40 * scaleModifier, display: 'flex', flexDirection:'row', gap: 20 * scaleModifier }]}>
                 {
                     buttonsData.map((data: any) => {
                         return (
@@ -33,6 +33,8 @@ export const HomeScreen = ({ route, navigation }) => {
                     })
                 }
             </TVFocusGuideView>
+            <Text style={[styles.p]}>Click one of the options above, then click the back button to return.</Text>
+            <Text style={[styles.p]}>On Android TV, the button does not receive focus again after navigating back.</Text>
 
         </View>
     )
