@@ -1,31 +1,46 @@
 import { StyleSheet, Dimensions } from 'react-native'
+
+const DEFAULT_SCREEN_WIDTH = 1920 // Design for this. Used by tvOS. Android TV will be scaled.
 export const windowWidth = Dimensions.get('window').width
 export const windowHeight = Dimensions.get('window').height
-//export const windowScale = Dimensions.get('window').scale
-//export const fontScale = Dimensions.get('window').fontScale
-export const scaleModifier = windowWidth / 1920
+export const scaleModifier = windowWidth / DEFAULT_SCREEN_WIDTH
 export const scaleSize = (size: number): number => {
-    // const defaultScreenWidth = 1920;
-    // const screenWidth = Dimensions.get('window').width;
-    // const modifier = screenWidth / defaultScreenWidth;
     return size * scaleModifier;
 }
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#111',
     },
     centered: {
         alignItems: 'center',
         justifyContent: 'center',
     },
     h1: {
-        fontSize: 40,
+        color: 'white',
+        fontSize: 60 * scaleModifier,
         fontWeight: 'bold'
     },
     h2: {
-        fontSize: 30,
+        color: 'white',
+        fontSize: 40 * scaleModifier,
+        fontWeight: 'bold'
+    },
+    button: {
+        margin: 20 * scaleModifier,
+        padding: 40 * scaleModifier,
+        backgroundColor: '#333333',
+        borderWidth: 4 * scaleModifier,
+        borderColor: 'white'
+    },
+    buttonFocus: {
+        backgroundColor: '#888888',
+        borderColor: 'yellow'
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 30 * scaleModifier,
         fontWeight: 'bold'
     }
 })

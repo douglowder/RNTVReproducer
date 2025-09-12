@@ -1,5 +1,12 @@
 # TV Example
 
+
+### change provided Expo/RN versions..
+
+`npx expo install expo@[version] --fix`
+
+
+
 Creates a project that can build for Apple TV and Android TV targets.
 
 This project uses
