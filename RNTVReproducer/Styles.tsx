@@ -11,7 +11,8 @@ export const scaleSize = (size: number): number => {
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#111',
+        backgroundColor: '#111111',
+        padding: 40 * scaleModifier
     },
     centered: {
         alignItems: 'center',
@@ -28,9 +29,15 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     button: {
-        margin: 20 * scaleModifier,
-        padding: 40 * scaleModifier,
+        borderRadius: 99,
+        marginRight: 20 * scaleModifier,
+        marginBottom: 20 * scaleModifier,
+        paddingTop: 40 * scaleModifier,
+        paddingBottom: 40 * scaleModifier,
+        paddingLeft: 60 * scaleModifier,
+        paddingRight: 60 * scaleModifier,
         backgroundColor: '#333333',
+
         borderWidth: 4 * scaleModifier,
         borderColor: 'white'
     },
@@ -40,7 +47,8 @@ export const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-        fontSize: 30 * scaleModifier,
-        fontWeight: 'bold'
+        fontSize: 40 * scaleModifier,
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
     }
 })

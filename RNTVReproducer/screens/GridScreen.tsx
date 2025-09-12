@@ -1,6 +1,5 @@
-import { View, Text, ImageBackground, ScrollView, TVEventControl, Modal, TVFocusGuideView, ImageSourcePropType, BackHandler, Platform } from 'react-native';
+import { View, Text, ImageBackground, ScrollView, TVFocusGuideView, ImageSourcePropType, Platform } from 'react-native';
 import { useCallback, useEffect, useState } from 'react';
-import * as SplashScreen from 'expo-splash-screen'
 import { styles } from '../Styles';
 
 export const GridScreen = ({ route, navigation }) => {

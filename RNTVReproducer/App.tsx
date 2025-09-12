@@ -6,8 +6,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { styles } from './Styles';
 
 // Screens
-import { HomeScreen } from './screens/HomeScreen';
-import { GridScreen } from './screens/GridScreen';
+import { HomeScreen } from './screens/HomeScreen'
+import { GridScreen } from './screens/GridScreen'
+import { DetailScreen } from './screens/DetailScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -23,6 +24,7 @@ export default function App() {
           initialRouteName='HomeScreen'>
           <Stack.Screen name='HomeScreen' component={HomeScreen} initialParams={{ path: '/', name: 'HomeScreen' }} options={{ title: 'Home', animation: 'fade_from_bottom', headerShown: false }} />
           <Stack.Screen name='GridScreen' component={GridScreen} initialParams={{ path: '/', name: 'GridScreen' }} options={{ title: 'GridScreen', animation: 'fade_from_bottom', headerShown: false }} />
+          <Stack.Screen name='DetailScreen' component={DetailScreen} initialParams={{ path: '/', name: 'DetailScreen' }} options={{ title: 'DetailScreen', animation: 'fade_from_bottom', headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
