@@ -36,6 +36,9 @@ export const HomeScreen = ({ route, navigation }) => {
             <Text style={[styles.p]}>Click one of the options above, then click the back button to return.</Text>
             <Text style={[styles.p]}>On Android TV, the button does not receive focus again after navigating back.</Text>
 
+
+            <Text style={[styles.h1, { marginTop: 40 * scaleModifier}]}>Please test on a physical device!</Text>
+
         </View>
     )
 
