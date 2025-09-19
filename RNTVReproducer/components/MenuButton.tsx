@@ -21,10 +21,14 @@ export const MenuButton = (props: Props) => {
         }
     }
 
+    // https://github.com/react-native-tvos/react-native-tvos/blob/main/packages/react-native/Libraries/Components/Pressable/Pressable.js#L389
+
     return (
         <Pressable
             disabled={props?.focusable ? false : true} // Only disables onPress. 
             isTVSelectable={props?.focusable ? true : false} // AppleTV only?!  
+            tvFocusable={props?.focusable ? true : false} // ???
+            focusable={props?.focusable ? true : false}
             tvParallaxProperties={{ tiltAngle: 0, magnification: 1.0, pressMagnification: 0.95 }}
             hasTVPreferredFocus={props?.hasPreferredFocus ? true : false}
             onPress={() => {

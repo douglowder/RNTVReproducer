@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, ScrollView, TVEventControl, Modal, TVFocusGuideView, ImageSourcePropType, BackHandler, Platform } from 'react-native';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen'
 import { scaleModifier, styles } from '../Styles';
 import { MenuButton } from '../components/MenuButton';
@@ -8,8 +8,14 @@ export const HomeScreen = ({ route, navigation }) => {
 
     console.log('HomeScreen ...')
 
+    const [msg, setMsg] = useState(null)
+
     const testCallback = (data:any) => {
         console.log(data)
+        setMsg(data)
+        setTimeout(() => {
+            setMsg(null)
+        }, 2000);
     }
     
     const buttonsData: any = [
@@ -51,6 +57,10 @@ export const HomeScreen = ({ route, navigation }) => {
                 }
             </TVFocusGuideView>
             <Text style={[styles.p]}>Testing to see if isTVSelectable=false is respected on Android/Fire. Works OK on tvOS.</Text>
+            {
+                msg && <Text style={[styles.p]}>{ msg }</Text>
+            }
+            
 
         </View>
     )
