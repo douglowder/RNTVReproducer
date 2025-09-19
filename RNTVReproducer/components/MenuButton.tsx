@@ -23,13 +23,13 @@ export const MenuButton = (props: Props) => {
 
     return (
         <Pressable
-            // disabled={props?.focusable ? true : false}
-            isTVSelectable={props?.focusable ? true : false}
+            disabled={props?.focusable ? false : true} // Only disables onPress. 
+            isTVSelectable={props?.focusable ? true : false} // AppleTV only?!  
             tvParallaxProperties={{ tiltAngle: 0, magnification: 1.0, pressMagnification: 0.95 }}
             hasTVPreferredFocus={props?.hasPreferredFocus ? true : false}
             onPress={() => {
                 if (props.callback) {
-                    props.callback('CALLBACK!')
+                    props.callback('HELLO CALLBACK!')
                     return
                 }
                 action(props.action)
