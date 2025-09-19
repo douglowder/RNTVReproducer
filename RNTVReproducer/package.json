@@ -17,8 +17,7 @@
     "react-dom": "19.0.0",
     "react-native": "npm:react-native-tvos@0.79.5-0",
     "react-native-safe-area-context": "^5.6.0",
-    "react-native-screens": "^4.13.1",
-    "react-tv-space-navigation": "^6.0.0-beta1"
+    "react-native-screens": "^4.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

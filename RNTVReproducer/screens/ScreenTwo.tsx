@@ -6,7 +6,7 @@ export const ScreenTwo = ({ route, navigation }) => {
 return (
     <View style={[styles.container, styles.centered]}>
       <Text style={[styles.h1]}>Screen Two</Text>
-      <Text style={[styles.h2]}>Go back. See if the button is focused.</Text>
+      <Text style={[styles.h2]}>Go back.</Text>
     </View>
   )
 }

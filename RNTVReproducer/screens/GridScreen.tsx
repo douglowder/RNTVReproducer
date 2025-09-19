@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, ScrollView, TVFocusGuideView, ImageSourcePropType, Platform } from 'react-native';
+import { View, Text } from 'react-native';
 import { useCallback, useEffect, useState } from 'react';
 import { styles } from '../Styles';
 

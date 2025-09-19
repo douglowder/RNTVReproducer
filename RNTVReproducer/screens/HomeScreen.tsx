@@ -8,36 +8,49 @@ export const HomeScreen = ({ route, navigation }) => {
 
     console.log('HomeScreen ...')
 
+    const testCallback = (data:any) => {
+        console.log(data)
+    }
+    
     const buttonsData: any = [
         {
             title: 'Screen One',
-            action: 'nav:ScreenOne',
+            action: 'nav:ScreenOne', // Navigate to 'ScreenOne'
+            focusable: true,
             hasPreferredFocus: true
+            
         },
         {
             title: 'Screen Two',
-            action: 'nav:ScreenTwo'
+            action: 'nav:ScreenTwo', // Navigate to 'ScreenTwo'
+            focusable: true
         },
+        {
+            title: 'Callback test',
+            callback: testCallback, // Console log ..
+            focusable: true
+        },
+        {
+            title: 'Disabled',
+            focusable: false // Will set isTVSelectable to false
+        }
 
     ]
 
+
     return (
         <View style={[styles.container, {}]}>
-            <Text style={[styles.h1]}>ISSUE REPRODUCER : HomeScreen</Text>
+            <Text style={[styles.h1]}>ISSUE REPRODUCER</Text>
             <TVFocusGuideView style={[{ marginTop: 40 * scaleModifier, display: 'flex', flexDirection:'row', gap: 20 * scaleModifier }]}>
                 {
-                    buttonsData.map((data: any) => {
+                    buttonsData.map((data: any, i: number) => {
                         return (
-                            <MenuButton title={data.title} key={data.title} navigation={navigation} action={data.action} />
+                            <MenuButton title={data.title} key={i} focusable={data?.focusable} callback={data?.callback} action={data?.action} hasPreferredFocus={data?.hasPreferredFocus} navigation={navigation} />
                         )
                     })
                 }
             </TVFocusGuideView>
-            <Text style={[styles.p]}>Click one of the options above, then click the back button to return.</Text>
-            <Text style={[styles.p]}>On Android TV, the button does not receive focus again after navigating back.</Text>
-
-
-            <Text style={[styles.h1, { marginTop: 40 * scaleModifier}]}>Please test on a physical device!</Text>
+            <Text style={[styles.p]}>Testing to see if isTVSelectable=false is respected on Android/Fire. Works OK on tvOS.</Text>
 
         </View>
     )
