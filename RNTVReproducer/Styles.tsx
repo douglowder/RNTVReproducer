@@ -45,21 +45,49 @@ export const styles = StyleSheet.create({
         paddingLeft: 50 * scaleModifier,
         paddingRight: 50 * scaleModifier,
         backgroundColor: '#333333',
-
         borderWidth: 4 * scaleModifier,
         borderColor: 'white'
     },
     buttonFocus: {
         backgroundColor: '#888888',
-        borderColor: 'yellow',        
+        borderColor: 'yellow',
     },
     buttonFocusAndroid: {
-        transform: [ {scale: 1.1 }]
+        transform: [{ scale: 1.1 }]
     },
     buttonText: {
         color: 'white',
         fontSize: 40 * scaleModifier,
         fontWeight: 'bold',
         textTransform: 'uppercase'
+    },
+    buttonTextSmall: {
+        color: 'yellow',
+        fontSize: 30 * scaleModifier
+    },
+    gridItem: {
+        width: 300 * scaleModifier,
+        height: 180 * scaleModifier,
+        borderWidth: 4 * scaleModifier,
+        borderColor: '#999',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    gridItemText: {
+        color: 'white',
+        fontSize: 40 * scaleModifier,
+        fontWeight: 'bold',
+    },
+    gridItemFocus: {
+        borderColor: 'yellow'
+    },
+    gridItemPress: {
+        borderColor: 'lime',
+        backgroundColor: 'green'
+    },
+    grid: {
+        borderWidth: 2 * scaleModifier,
+        borderColor: 'red'
     }
 })

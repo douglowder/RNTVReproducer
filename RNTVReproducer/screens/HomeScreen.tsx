@@ -1,44 +1,38 @@
-import { View, Text, ImageBackground, ScrollView, TVEventControl, Modal, TVFocusGuideView, ImageSourcePropType, BackHandler, Platform } from 'react-native';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import * as SplashScreen from 'expo-splash-screen'
+import { View, Text, TVFocusGuideView } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
 import { scaleModifier, styles } from '../Styles';
 import { MenuButton } from '../components/MenuButton';
 
 export const HomeScreen = ({ route, navigation }) => {
 
-    console.log('HomeScreen ...')
-
-    const [msg, setMsg] = useState(null)
-
-    const testCallback = (data:any) => {
+    const testCallback = (data: any) => {
         console.log(data)
-        setMsg(data)
-        setTimeout(() => {
-            setMsg(null)
-        }, 2000);
     }
-    
     const buttonsData: any = [
         {
-            title: 'Screen One',
+            title: 'One',
             action: 'nav:ScreenOne', // Navigate to 'ScreenOne'
             focusable: true,
-            hasPreferredFocus: true
-            
         },
         {
-            title: 'Screen Two',
+            title: 'Two',
             action: 'nav:ScreenTwo', // Navigate to 'ScreenTwo'
+            focusable: true,
+            hasPreferredFocus: true
+        },
+        {
+            title: 'Grid',
+            action: 'nav:GridScreen', // Navigate to 'GridScreen' TODO: Test scroll/focus position on Android FlatList at top/bottom screen edges.
             focusable: true
         },
         {
-            title: 'Callback test',
+            title: 'Callback',
             callback: testCallback, // Console log ..
             focusable: true
         },
         {
             title: 'Disabled',
-            focusable: false // Will set isTVSelectable to false
+            focusable: false // Will set focusable to false
         }
 
     ]
@@ -46,8 +40,8 @@ export const HomeScreen = ({ route, navigation }) => {
 
     return (
         <View style={[styles.container, {}]}>
-            <Text style={[styles.h1]}>ISSUE REPRODUCER</Text>
-            <TVFocusGuideView style={[{ marginTop: 40 * scaleModifier, display: 'flex', flexDirection:'row', gap: 20 * scaleModifier }]}>
+            <Text style={[styles.h1]}>ISSUE TESTER</Text>
+            <TVFocusGuideView style={[{ marginTop: 40 * scaleModifier, display: 'flex', flexDirection: 'row', gap: 20 * scaleModifier }]}>
                 {
                     buttonsData.map((data: any, i: number) => {
                         return (
@@ -56,15 +50,7 @@ export const HomeScreen = ({ route, navigation }) => {
                     })
                 }
             </TVFocusGuideView>
-            <Text style={[styles.p]}>Testing to see if isTVSelectable=false is respected on Android/Fire. Works OK on tvOS.</Text>
-            {
-                msg && <Text style={[styles.p]}>{ msg }</Text>
-            }
-            
-
+            {/* <Text style={[styles.p]}>Testing to see if isTVSelectable=false is respected on Android/Fire. Works OK on tvOS.</Text> */}
         </View>
     )
-
-
-
 }

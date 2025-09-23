@@ -1,6 +1,5 @@
 import { View, Text } from 'react-native';
 import { styles } from '../Styles';
-import { useNavigation } from '@react-navigation/native';
 
 export const ScreenOne = ({ route, navigation }) => {
 

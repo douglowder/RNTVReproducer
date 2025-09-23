@@ -30,7 +30,7 @@
       },
       "bundleIdentifier": "com.anonymous.RNTVReproducer"
     },
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "name": "RNTVReproducer",
     "slug": "RNTVReproducer"
   }

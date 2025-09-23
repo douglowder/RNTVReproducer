@@ -1,6 +1,6 @@
-import { Text, View } from 'react-native';
+import { Text, View, LogBox } from 'react-native';
 import { useRef } from 'react';
-import { NavigationContainer, NavigationContainerRef, CommonActions, DarkTheme } from '@react-navigation/native'
+import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { styles } from './Styles';
@@ -19,6 +19,8 @@ export default function App() {
 
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
+  LogBox.ignoreAllLogs()
+  
   return (
     <>
       <NavigationContainer ref={navigationRef}>
@@ -29,7 +31,7 @@ export default function App() {
           <Stack.Screen name='ScreenOne' component={ScreenOne} initialParams={{ path: '/', name: 'ScreenOne' }} options={{ title: 'ScreenOne', animation: 'fade_from_bottom', headerShown: false }} />
           <Stack.Screen name='ScreenTwo' component={ScreenTwo} initialParams={{ path: '/', name: 'ScreenTwo' }} options={{ title: 'ScreenTwo', animation: 'fade_from_bottom', headerShown: false }} />
           {/* TODO .. */}
-          {/* <Stack.Screen name='GridScreen' component={GridScreen} initialParams={{ path: '/', name: 'GridScreen' }} options={{ title: 'GridScreen', animation: 'fade_from_bottom', headerShown: false }} /> */}
+          <Stack.Screen name='GridScreen' component={GridScreen} initialParams={{ path: '/', name: 'GridScreen' }} options={{ title: 'GridScreen', animation: 'fade_from_bottom', headerShown: false }} />
           {/* <Stack.Screen name='DetailScreen' component={DetailScreen} initialParams={{ path: '/', name: 'DetailScreen' }} options={{ title: 'DetailScreen', animation: 'fade_from_bottom', headerShown: false }} /> */}
         </Stack.Navigator>
       </NavigationContainer>
