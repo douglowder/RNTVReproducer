@@ -1,6 +1,6 @@
 import { View, Text, FlatList, Pressable, Platform, findNodeHandle } from 'react-native';
 import { useRef } from 'react';
-import { scaleModifier, styles, windowHeight } from '../Styles';
+import { ITEM_HEIGHT, scaleModifier, styles, windowHeight } from '../Styles';
 import { useToast, ToastProvider } from 'react-native-toast-notifications';
 
 interface Measurements {
@@ -46,9 +46,10 @@ export const GridScreenExperiment = ({ route, navigation }) => {
             renderItem={({ item }) => {
               return (<GridItem offsetYRef={offsetYRef} containerMeasurements={containerMeasurementsRef} listRef={listRef} props={item} />)
             }}
-            getItemLayout={(data, index) => ( // GridItem is height: 180
-              { length: 214 * scaleModifier, offset: 214 * scaleModifier * index, index }
+            getItemLayout={(data, index) => ( 
+              { length: ITEM_HEIGHT * scaleModifier, offset: ITEM_HEIGHT * scaleModifier * index, index }
             )}
+            // scrollEventThrottle={100}
             columnWrapperStyle={{ justifyContent: 'center', alignItems: 'center' }} //, gap: 40 * scaleModifier 
             contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }} //, gap: 40 * scaleModifier 
           >
@@ -154,10 +155,16 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
             // also listRef.current._listRef._indicesToKeys Map length
 
             // Check bottom edge is in bounds
-            if((itemRelativePosition.y + itemRelativePosition.height) > (containerMeasurements.current.height + containerMeasurements.current.y) ) { //  && row < (Math.floor(total / flatlistColumns) - 1) ensure we ignore the bottom row
+            // if((itemRelativePosition.y + itemRelativePosition.height) > (containerMeasurements.current.height + containerMeasurements.current.y) ) { //  && row < (Math.floor(total / flatlistColumns) - 1) ensure we ignore the bottom row
+            if((y + height + 2) > (containerMeasurements.current.height + containerMeasurements.current.y) && row < (rowCount - 1) ) { //  && row < (Math.floor(total / flatlistColumns) - 1) ensure we ignore the bottom row
               console.log('ITEM IS (partially) OUT OF BOTTOM BOUNDS - SCROLL UP')
 
-              offsetYRef.current = offsetYRef.current + (itemRelativePosition.height )
+
+              const __diffY =  (y + height) - (containerMeasurements.current.y + containerMeasurements.current.height)
+              console.log('diffY', __diffY)
+              
+              offsetYRef.current = offsetYRef.current + ( height + __diffY )
+              
               console.log('Scrolling up to offset ', offsetYRef.current)
               listRef?.current?.scrollToOffset({
                 offset: offsetYRef.current

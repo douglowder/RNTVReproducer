@@ -8,6 +8,9 @@ export const scaleSize = (size: number): number => {
     return size * scaleModifier;
 }
 
+export const ITEM_WIDTH = 300 * scaleModifier
+export const ITEM_HEIGHT = 180 * scaleModifier
+
 export const isTVOS = Platform.isTVOS
 
 export const styles = StyleSheet.create({
@@ -70,8 +73,8 @@ export const styles = StyleSheet.create({
         fontSize: 30 * scaleModifier
     },
     gridItem: {
-        width: 300 * scaleModifier,
-        height: 210 * scaleModifier,
+        width: ITEM_WIDTH,
+        height: ITEM_HEIGHT,
         borderWidth: 4 * scaleModifier,
         borderColor: '#999',
         display: 'flex',
