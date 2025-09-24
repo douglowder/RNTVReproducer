@@ -15,7 +15,7 @@ export const GridScreenExperiment = ({ route, navigation }) => {
   // Build a test FlatList grid to test/demonstrate scroll-to-focus issue on Android at top/bottom edges of screen/view.
   // See: https://github.com/react-native-tvos/react-native-tvos/issues/848#issuecomment-3325060435
 
-  const ITEM_COUNT = 102 // 198
+  const ITEM_COUNT = 66
   const testData = dummyData(ITEM_COUNT)
 
   const listRef = useRef(null)
@@ -146,34 +146,28 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
             // console.log('rowCount', rowCount)
             // equates to the property count of listRef.current._listRef._cellRefs
             // eg: { "1:2:3:4:5:6": [], "7:8:9:10:11:12": [], "13:14:15:16:17:18": [] } is 3 rows.
-            // also listRef.current._listRef._indicesToKeys Map length
+            // also listRef.current._listRef._indicesToKeys Map size
+            // console.log('_indicesToKeys.size ', listRef.current._listRef._indicesToKeys.size)
 
             // Check bottom edge is in bounds
-            if((y + height + 2) > (containerMeasurements.current.height + containerMeasurements.current.y) && row < (rowCount - 1) ) { //  ensure we ignore the bottom row once in position
+            if((y + height + 2) > (containerMeasurements.current.height + containerMeasurements.current.y) && row <= (rowCount - 1) ) { //  ensure we ignore the bottom row once in position
               console.log('ITEM IS (partially) OUT OF BOTTOM BOUNDS - SCROLL UP')
-
-
               const __diffY =  (y + height) - (containerMeasurements.current.y + containerMeasurements.current.height)
-              console.log('diffY', __diffY)
-              
               offsetYRef.current = offsetYRef.current + ( height + __diffY )
-              
+
               console.log('Scrolling up to offset ', offsetYRef.current)
               listRef?.current?.scrollToOffset({
                 offset: offsetYRef.current
               })
 
             } else if( y - 2 < containerMeasurements.current.y &&  offsetYRef.current > 0) { // ensuring we ignore the top row
-
-              console.log('ITEM IS (partially) OUT OF TOP BOUNDS = SCROLL DOWN')
-           
+              console.log('ITEM IS (partially) OUT OF TOP BOUNDS - SCROLL DOWN')
               const _diffY = containerMeasurements.current.y - y + 1
-              // console.log('focused item above top of list by ', _diffY)
               offsetYRef.current = offsetYRef.current - (itemRelativePosition.height + _diffY )
-
               if(offsetYRef.current < 0){
                 offsetYRef.current = 0
               }
+
               console.log('Scrolling down to offset ', offsetYRef.current)
               listRef?.current?.scrollToOffset({
                 offset: offsetYRef.current
