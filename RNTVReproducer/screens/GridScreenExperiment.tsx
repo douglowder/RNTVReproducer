@@ -155,8 +155,7 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
             // also listRef.current._listRef._indicesToKeys Map length
 
             // Check bottom edge is in bounds
-            // if((itemRelativePosition.y + itemRelativePosition.height) > (containerMeasurements.current.height + containerMeasurements.current.y) ) { //  && row < (Math.floor(total / flatlistColumns) - 1) ensure we ignore the bottom row
-            if((y + height + 2) > (containerMeasurements.current.height + containerMeasurements.current.y) && row < (rowCount - 1) ) { //  && row < (Math.floor(total / flatlistColumns) - 1) ensure we ignore the bottom row
+            if((y + height + 2) > (containerMeasurements.current.height + containerMeasurements.current.y) && row < (rowCount - 1) ) { //  ensure we ignore the bottom row once in position
               console.log('ITEM IS (partially) OUT OF BOTTOM BOUNDS - SCROLL UP')
 
 
@@ -170,13 +169,10 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
                 offset: offsetYRef.current
               })
 
-            // } else if((itemRelativePosition.y + containerMeasurements.current.y) < containerMeasurements.current.y){ // && props.index >= flatlistColumns ensuring we ignore the top row
-            } else if( y - 2 < containerMeasurements.current.y &&  offsetYRef.current > 0) { // && props.index >= flatlistColumns ensuring we ignore the top row
+            } else if( y - 2 < containerMeasurements.current.y &&  offsetYRef.current > 0) { // ensuring we ignore the top row
 
               console.log('ITEM IS (partially) OUT OF TOP BOUNDS = SCROLL DOWN')
-              // console.log('itemRelativePosition.y :', itemRelativePosition.y)
-              // console.log('containerMeasurements.current.y :', containerMeasurements.current.y)
-
+           
               const _diffY = containerMeasurements.current.y - y + 1
               // console.log('focused item above top of list by ', _diffY)
               offsetYRef.current = offsetYRef.current - (itemRelativePosition.height + _diffY )
