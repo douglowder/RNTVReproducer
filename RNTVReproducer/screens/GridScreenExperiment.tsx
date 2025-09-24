@@ -21,7 +21,6 @@ export const GridScreenExperiment = ({ route, navigation }) => {
   const listRef = useRef(null)
   const containerRef = useRef(null)
   const containerMeasurementsRef = useRef<Measurements | null>(null)
-  const offsetYRef = useRef(0)
 
   const onContainerLayout = (event: any) => {
     console.log('Container layout', event.nativeEvent.layout)
@@ -42,7 +41,7 @@ export const GridScreenExperiment = ({ route, navigation }) => {
             initialNumToRender={36}
             data={testData}
             renderItem={({ item }) => {
-              return (<GridItem offsetYRef={offsetYRef} containerMeasurements={containerMeasurementsRef} listRef={listRef} props={item} />)
+              return (<GridItem containerMeasurements={containerMeasurementsRef} listRef={listRef} props={item} />)
             }}
             getItemLayout={(data, index) => ( 
               { length: ITEM_HEIGHT * scaleModifier, offset: ITEM_HEIGHT * scaleModifier * index, index }
@@ -58,7 +57,7 @@ export const GridScreenExperiment = ({ route, navigation }) => {
 }
 
 
-const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
+const GridItem = ({ props, listRef, containerMeasurements }) => {
 
   const focusCount = useRef(0)
   const timeoutRef = useRef(null)
@@ -103,10 +102,10 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
 
     // event.nativeEvent.layout *always* returns a `y` value of 0, regardless of which 'row' the item is on.
 
-    // Delay to ensure layout is complete
-    requestAnimationFrame(() => {
-      measureRelativeToFlatList();
-    });
+    // tried this too.. 
+    // requestAnimationFrame(() => {
+    //   measureRelativeToFlatList();
+    // });
   };
 
   return (
@@ -126,21 +125,10 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
           const column = props?.index % flatlistColumns
           console.log(Platform.isTVOS ? 'AppleTV' : 'AndroidTV', 'focus: index:', props.index, 'column:', column, 'row:', row)
 
-          // console.log('Current _listRef offset:', listRef?.current?._listRef?._scrollMetrics.offset)
+          const currentOffset = listRef?.current?._listRef?._scrollMetrics.offset
 
           itemRef.current?.measureInWindow((x: number, y: number, width: number, height: number) => {
             // console.log(`Position in Window: x=${x}, y=${y}, width=${width}, height=${height}`)
-            const itemRelativePosition:Measurements = {
-              x: x - containerMeasurements.current.x,
-              y: y - containerMeasurements.current.y - 1, // hmmm...
-              height: height,
-              width: width
-            }
-            
-            // console.log(`Relative position to container: x=${itemRelativePosition.x}, y=${itemRelativePosition.y}, width=${width}, height=${height}`)
-            // console.log(`Relative position to window: x=${x}, y=${y}, width=${width}, height=${height}`)
-            // console.log('offsetYRef:', offsetYRef.current)
-
             const total = listRef.current?.props.data.length
             const rowCount =  Math.round(total / flatlistColumns)
             // console.log('rowCount', rowCount)
@@ -152,25 +140,17 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
             // Check bottom edge is in bounds
             if((y + height + 2) > (containerMeasurements.current.height + containerMeasurements.current.y) && row <= (rowCount - 1) ) { //  ensure we ignore the bottom row once in position
               console.log('ITEM IS (partially) OUT OF BOTTOM BOUNDS - SCROLL UP')
-              const __diffY =  (y + height) - (containerMeasurements.current.y + containerMeasurements.current.height)
-              offsetYRef.current = offsetYRef.current + ( height + __diffY )
-
-              console.log('Scrolling up to offset ', offsetYRef.current)
+              const __diffY =  (y + height) - (containerMeasurements.current.y + containerMeasurements.current.height)              
               listRef?.current?.scrollToOffset({
-                offset: offsetYRef.current
+                offset: currentOffset + ( height + __diffY )
               })
-
-            } else if( y - 2 < containerMeasurements.current.y &&  offsetYRef.current > 0) { // ensuring we ignore the top row
+            } 
+            
+            if( (y - 2 < containerMeasurements.current.y) && currentOffset > 0) { // ensuring we ignore the top row
               console.log('ITEM IS (partially) OUT OF TOP BOUNDS - SCROLL DOWN')
               const _diffY = containerMeasurements.current.y - y + 1
-              offsetYRef.current = offsetYRef.current - (itemRelativePosition.height + _diffY )
-              if(offsetYRef.current < 0){
-                offsetYRef.current = 0
-              }
-
-              console.log('Scrolling down to offset ', offsetYRef.current)
               listRef?.current?.scrollToOffset({
-                offset: offsetYRef.current
+                offset: currentOffset - (height + _diffY)
               })
             }
           })
@@ -180,7 +160,7 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
           const animate = (timestamp: number) => {
             if (!startTime) startTime = timestamp;
             const elapsed = timestamp - startTime;
-            if (elapsed >= 200) {
+            if (elapsed >= 100) {
               // Reset focusCount 
               // console.log('onFocus trigger count:', focusCount.current)
               focusCount.current = 0
