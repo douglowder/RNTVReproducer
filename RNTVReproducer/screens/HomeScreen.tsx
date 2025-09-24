@@ -23,13 +23,13 @@ export const HomeScreen = ({ route, navigation }) => {
         // },
         {
             title: 'Normal Scrollable FlatList',
-            action: 'nav:GridScreen', // Navigate to 'GridScreen' TODO: Test scroll/focus position on Android FlatList at top/bottom screen edges.
+            action: 'nav:GridScreen', // Navigates to 'GridScreen'
             focusable: true,
             hasPreferredFocus: true
         },
         {
-            title: 'FlatList Scroll Experiments',
-            action: 'nav:GridScreenExperiment', // Navigate to 'GridScreen' TODO: Test scroll/focus position on Android FlatList at top/bottom screen edges.
+            title: 'FlatList Scroll Experiment',
+            action: 'nav:GridScreenExperiment', // Navigates to 'GridScreenExperiment'
             focusable: true,
             hasPreferredFocus: true
         },

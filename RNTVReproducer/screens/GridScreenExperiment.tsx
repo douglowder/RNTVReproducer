@@ -1,6 +1,6 @@
 import { View, Text, FlatList, Pressable, Platform, findNodeHandle } from 'react-native';
 import { useRef } from 'react';
-import { ITEM_HEIGHT, scaleModifier, styles, windowHeight } from '../Styles';
+import { ITEM_HEIGHT, ITEM_WIDTH, scaleModifier, styles, windowHeight } from '../Styles';
 
 interface Measurements {
   x: number
@@ -12,7 +12,7 @@ interface Measurements {
 // See: https://github.com/react-native-tvos/react-native-tvos/issues/848#issuecomment-3325060435
 /*
 
-This FlatList (with scrollEnabled:false) will now scroll and focus on AndroidTV in the same way that tvOS does with a normal scrollable FlatList.
+  This FlatList (with scrollEnabled:false) will now scroll and focus on AndroidTV in the same way that tvOS does with a normal scrollable FlatList.
 
   When the focused item rect breaks out of the boundary of the list container, it will use .scrollToOffset to keep
   the iten in view, also providing an item height's space until the top and bottom rows, as tvOS does.
@@ -30,14 +30,16 @@ export const GridScreenExperiment = ({ route, navigation }) => {
   const containerMeasurementsRef = useRef<Measurements | null>(null)
 
   const onContainerLayout = (event: any) => {
-    // console.log('Container layout', event.nativeEvent.layout)
+     console.log('Container layout', event.nativeEvent.layout)
     containerMeasurementsRef.current = event.nativeEvent.layout
+  }
+  const onListLayout = (event: any) => {
+    console.log('List layout', event.nativeEvent.layout)
   }
 
   return (
       <View style={styles.screen}>
-        <View onLayout={onContainerLayout} ref={containerRef} style={[{ margin: 40 * scaleModifier, marginLeft: 'auto', marginRight: 'auto', backgroundColor: 'red', height: windowHeight - (80 * scaleModifier), width: 300 * scaleModifier * NUM_COLUMNS }]}>
-
+        <View onLayout={onContainerLayout} ref={containerRef} style={[{ margin: 40 * scaleModifier, marginLeft: 'auto', marginRight: 'auto', backgroundColor: '#212121', height: windowHeight - (80 * scaleModifier), width: ITEM_WIDTH * NUM_COLUMNS }]}>
           <FlatList
             ref={listRef}
             style={styles.grid}
@@ -119,13 +121,13 @@ const GridItem = ({ props, listRef, containerMeasurements }) => {
       onFocus={() => {
         const flatlistColumns = listRef.current.props.numColumns
 
-        // AndroidTV is firing onFocus twice!?
+        // AndroidTV appears to be firing onFocus twice?
         // console.log(Platform.isTVOS ? 'AppleTV' : 'AndroidTV', 'focus: index:', props.index, 'col:', props?.index % flatlistColumns, 'row:', Math.floor(props.index / flatlistColumns))
 
-        // Make sure to only catch this once, since AndroidTV is firing onFocus twice.
+        // Make sure we only catch this once
         focusCount.current = focusCount.current + 1
         if (focusCount.current === 1) {
-
+          // Position in grid
           const row = Math.floor(props.index / flatlistColumns)
           const column = props?.index % flatlistColumns
           console.log(Platform.isTVOS ? 'AppleTV' : 'AndroidTV', 'focus: index:', props.index, 'column:', column, 'row:', row)
@@ -143,7 +145,7 @@ const GridItem = ({ props, listRef, containerMeasurements }) => {
             // console.log('_indicesToKeys.size ', listRef.current._listRef._indicesToKeys.size)
 
             // Check bottom edge is in bounds
-            if((y + height + 2) > (containerMeasurements.current.height + containerMeasurements.current.y) && row <= (rowCount - 1) ) { //  ensure we ignore the bottom row once in position
+            if((y + height + 2) > (containerMeasurements.current.height + containerMeasurements.current.y) && (row < rowCount)) { //  ensure we ignore the bottom row once in position
               console.log('ITEM IS (partially) OUT OF BOTTOM BOUNDS - SCROLL UP')
               const __diffY =  (y + height) - (containerMeasurements.current.y + containerMeasurements.current.height)              
               listRef?.current?.scrollToOffset({
