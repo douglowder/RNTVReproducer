@@ -30,13 +30,10 @@ export const GridScreenExperiment = ({ route, navigation }) => {
   const containerMeasurementsRef = useRef<Measurements | null>(null)
 
   const onContainerLayout = (event: any) => {
-     console.log('Container layout', event.nativeEvent.layout)
+    console.log('Container layout', event.nativeEvent.layout)
     containerMeasurementsRef.current = event.nativeEvent.layout
   }
-  const onListLayout = (event: any) => {
-    console.log('List layout', event.nativeEvent.layout)
-  }
-
+  
   return (
       <View style={styles.screen}>
         <View onLayout={onContainerLayout} ref={containerRef} style={[{ margin: 40 * scaleModifier, marginLeft: 'auto', marginRight: 'auto', backgroundColor: '#212121', height: windowHeight - (80 * scaleModifier), width: ITEM_WIDTH * NUM_COLUMNS }]}>
@@ -55,7 +52,6 @@ export const GridScreenExperiment = ({ route, navigation }) => {
             getItemLayout={(data, index) => ( 
               { length: ITEM_HEIGHT * scaleModifier, offset: ITEM_HEIGHT * scaleModifier * index, index }
             )}
-            // scrollEventThrottle={100}
             columnWrapperStyle={{ justifyContent: 'center', alignItems: 'center' }} //, gap: 40 * scaleModifier 
             contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }} //, gap: 40 * scaleModifier 
           >
