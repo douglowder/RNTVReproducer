@@ -9,12 +9,19 @@ interface Measurements {
   height: number  
 }
 
+// See: https://github.com/react-native-tvos/react-native-tvos/issues/848#issuecomment-3325060435
+/*
+
+This FlatList (with scrollEnabled:false) will now scroll and focus on AndroidTV in the same way that tvOS does with a normal scrollable FlatList.
+
+  When the focused item rect breaks out of the boundary of the list container, it will use .scrollToOffset to keep
+  the iten in view, also providing an item height's space until the top and bottom rows, as tvOS does.
+
+  */
+
 export const GridScreenExperiment = ({ route, navigation }) => {
 
   const NUM_COLUMNS = 6
-  // Build a test FlatList grid to test/demonstrate scroll-to-focus issue on Android at top/bottom edges of screen/view.
-  // See: https://github.com/react-native-tvos/react-native-tvos/issues/848#issuecomment-3325060435
-
   const ITEM_COUNT = 66
   const testData = dummyData(ITEM_COUNT)
 
@@ -23,7 +30,7 @@ export const GridScreenExperiment = ({ route, navigation }) => {
   const containerMeasurementsRef = useRef<Measurements | null>(null)
 
   const onContainerLayout = (event: any) => {
-    console.log('Container layout', event.nativeEvent.layout)
+    // console.log('Container layout', event.nativeEvent.layout)
     containerMeasurementsRef.current = event.nativeEvent.layout
   }
 
@@ -63,11 +70,11 @@ const GridItem = ({ props, listRef, containerMeasurements }) => {
   const timeoutRef = useRef(null)
   const itemRef = useRef(null)
 
+  // Unused. But leaving here to share the issues
   const measureRelativeToFlatList = () => {
     if (itemRef.current && listRef.current) {
-
       // itemRef.current.measure((x: number, y: number, width: number, height: number) => {
-      //   // ***  y is always return ing zero, even on lower rows... 
+      //   // ***  y is always returning zero, even on lower rows... 
       //   console.log(`Position in FlatList: x=${x}, y=${y}, width=${width}, height=${height}`);
       // })
 
@@ -80,12 +87,11 @@ const GridItem = ({ props, listRef, containerMeasurements }) => {
       // console.log( listRef.current.getScrollableNode() )
       // const scrollableNode = listRef.current.getScrollableNode() 
       // const scrollViewNode = listRef.current._listRef?.getScrollableNode?.()
-      // const listNodeHandle = findNodeHandle(contRef.current)
-      // if (listNodeHandle) {
-      
+      // const contNodeHandle = findNodeHandle(contRef.current)
+      // if (contNodeHandle) {
       // ** Throws a warning about needing to use a native ref...?
       //   itemRef.current.measureLayout(
-      //     listNodeHandle,
+      //     contNodeHandle,
       //     (x: number, y: number, width: number, height: number) => {
       //       console.log(`Relative position in FlatList: x=${x}, y=${y}, width=${width}, height=${height}`);
       //     },
@@ -94,13 +100,12 @@ const GridItem = ({ props, listRef, containerMeasurements }) => {
       //     }
       //   )
       // }
-
     }
   }
 
   const handleLayout = (event: any) => {
 
-    // event.nativeEvent.layout *always* returns a `y` value of 0, regardless of which 'row' the item is on.
+    // event.nativeEvent.layout always returns a `y` value of 0, regardless of which 'row' the item is on.
 
     // tried this too.. 
     // requestAnimationFrame(() => {
