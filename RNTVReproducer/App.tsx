@@ -8,7 +8,8 @@ import { HomeScreen } from './screens/HomeScreen'
 import { ScreenOne } from './screens/ScreenOne'
 import { ScreenTwo } from './screens/ScreenTwo'
 import { GridScreen } from './screens/GridScreen'
-import { DetailScreen } from './screens/DetailScreen'
+import { GridScreenExperiment } from './screens/GridScreenExperiment';
+// import { DetailScreen } from './screens/DetailScreen'
 
 
 const Stack = createNativeStackNavigator()
@@ -26,12 +27,14 @@ export default function App() {
         <Stack.Navigator
           {...({} as any)} // Added to stop missing 'id' error. 
           initialRouteName='HomeScreen'>
-          <Stack.Screen name='HomeScreen' component={HomeScreen} initialParams={{ path: '/', name: 'HomeScreen' }} options={{ title: 'Home', animation: 'fade_from_bottom', headerShown: false }} />
-          <Stack.Screen name='ScreenOne' component={ScreenOne} initialParams={{ path: '/', name: 'ScreenOne' }} options={{ title: 'ScreenOne', animation: 'fade_from_bottom', headerShown: false }} />
-          <Stack.Screen name='ScreenTwo' component={ScreenTwo} initialParams={{ path: '/', name: 'ScreenTwo' }} options={{ title: 'ScreenTwo', animation: 'fade_from_bottom', headerShown: false }} />
-          {/* TODO .. */}
-          <Stack.Screen name='GridScreen' component={GridScreen} initialParams={{ path: '/', name: 'GridScreen' }} options={{ title: 'GridScreen', animation: 'fade_from_bottom', headerShown: false }} />
-          {/* <Stack.Screen name='DetailScreen' component={DetailScreen} initialParams={{ path: '/', name: 'DetailScreen' }} options={{ title: 'DetailScreen', animation: 'fade_from_bottom', headerShown: false }} /> */}
+          <Stack.Screen name='HomeScreen' component={HomeScreen} options={{ title: 'Home', animation: 'fade_from_bottom', headerShown: false }} />
+          <Stack.Screen name='ScreenOne' component={ScreenOne} options={{ title: 'ScreenOne', animation: 'fade_from_bottom', headerShown: false }} />
+          <Stack.Screen name='ScreenTwo' component={ScreenTwo} options={{ title: 'ScreenTwo', animation: 'fade_from_bottom', headerShown: false }} />
+
+          <Stack.Screen name='GridScreen' component={GridScreen} options={{ title: 'GridScreen', animation: 'fade_from_bottom', headerShown: false }} />
+          <Stack.Screen name='GridScreenExperiment' component={GridScreenExperiment} options={{ title: 'GridScreen', animation: 'fade_from_bottom', headerShown: false }} />
+
+          {/* <Stack.Screen name='DetailScreen' component={DetailScreen} options={{ title: 'DetailScreen', animation: 'fade_from_bottom', headerShown: false }} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </>

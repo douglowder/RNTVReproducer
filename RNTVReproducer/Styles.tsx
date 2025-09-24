@@ -11,6 +11,10 @@ export const scaleSize = (size: number): number => {
 export const isTVOS = Platform.isTVOS
 
 export const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+        backgroundColor: '#111111',
+    },
     container: {
         flex: 1,
         backgroundColor: '#111111',
@@ -53,7 +57,7 @@ export const styles = StyleSheet.create({
         borderColor: 'yellow',
     },
     buttonFocusAndroid: {
-        transform: [{ scale: 1.1 }]
+        // transform: [{ scale: 1.1 }]
     },
     buttonText: {
         color: 'white',
@@ -67,7 +71,7 @@ export const styles = StyleSheet.create({
     },
     gridItem: {
         width: 300 * scaleModifier,
-        height: 180 * scaleModifier,
+        height: 210 * scaleModifier,
         borderWidth: 4 * scaleModifier,
         borderColor: '#999',
         display: 'flex',

@@ -60,7 +60,7 @@ export const MenuButton = (props: Props) => {
                     return (
                         <View style={[styles.button, !props.focusable && { opacity: 0.5 }, focused && styles.buttonFocus, focused && !isTVOS && styles.buttonFocusAndroid]}>
                             <Text style={[styles.buttonText]}>{props.title}</Text>
-                            <Text style={[styles.buttonTextSmall]}>focusable: {props?.focusable ? 'true':'false'}</Text>
+                            {/* <Text style={[styles.buttonTextSmall]}>focusable: {props?.focusable ? 'true':'false'}</Text> */}
                         </View>
                     )
                 }

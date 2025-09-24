@@ -8,32 +8,40 @@ export const HomeScreen = ({ route, navigation }) => {
     const testCallback = (data: any) => {
         console.log(data)
     }
+
+    // Test buttons for demos..
     const buttonsData: any = [
+        // {
+        //     title: 'One',
+        //     action: 'nav:ScreenOne', // Navigate to 'ScreenOne'
+        //     focusable: true,
+        // },
+        // {
+        //     title: 'Two',
+        //     action: 'nav:ScreenTwo', // Navigate to 'ScreenTwo'
+        //     focusable: true,
+        // },
         {
-            title: 'One',
-            action: 'nav:ScreenOne', // Navigate to 'ScreenOne'
-            focusable: true,
-        },
-        {
-            title: 'Two',
-            action: 'nav:ScreenTwo', // Navigate to 'ScreenTwo'
+            title: 'Normal Scrollable FlatList',
+            action: 'nav:GridScreen', // Navigate to 'GridScreen' TODO: Test scroll/focus position on Android FlatList at top/bottom screen edges.
             focusable: true,
             hasPreferredFocus: true
         },
         {
-            title: 'Grid',
-            action: 'nav:GridScreen', // Navigate to 'GridScreen' TODO: Test scroll/focus position on Android FlatList at top/bottom screen edges.
-            focusable: true
+            title: 'FlatList Scroll Experiments',
+            action: 'nav:GridScreenExperiment', // Navigate to 'GridScreen' TODO: Test scroll/focus position on Android FlatList at top/bottom screen edges.
+            focusable: true,
+            hasPreferredFocus: true
         },
-        {
-            title: 'Callback',
-            callback: testCallback, // Console log ..
-            focusable: true
-        },
-        {
-            title: 'Disabled',
-            focusable: false // Will set focusable to false
-        }
+        // {
+        //     title: 'Callback',
+        //     callback: testCallback, // Console log ..
+        //     focusable: true
+        // },
+        // {
+        //     title: 'Should be Disabled',
+        //     focusable: false // Will set focusable to false
+        // }
 
     ]
 
@@ -50,7 +58,6 @@ export const HomeScreen = ({ route, navigation }) => {
                     })
                 }
             </TVFocusGuideView>
-            {/* <Text style={[styles.p]}>Testing to see if isTVSelectable=false is respected on Android/Fire. Works OK on tvOS.</Text> */}
         </View>
     )
 }
