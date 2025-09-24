@@ -120,7 +120,7 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
       onFocus={() => {
         const flatlistColumns = listRef.current.props.numColumns
 
-        // AndroidTV is firing onFocus twice!
+        // AndroidTV is firing onFocus twice!?
         // console.log(Platform.isTVOS ? 'AppleTV' : 'AndroidTV', 'focus: index:', props.index, 'col:', props?.index % flatlistColumns, 'row:', Math.floor(props.index / flatlistColumns))
 
         // Make sure to only catch this once, since AndroidTV is firing onFocus twice.
@@ -138,7 +138,7 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
               width: width
             }
             
-            console.log(`Relative position to container: x=${itemRelativePosition.x}, y=${itemRelativePosition.y}, width=${width}, height=${height}`)
+            // console.log(`Relative position to container: x=${itemRelativePosition.x}, y=${itemRelativePosition.y}, width=${width}, height=${height}`)
 
             // Check bottom edge is in bounds
             if(itemRelativePosition.y + itemRelativePosition.height > containerMeasurements.current.height){
