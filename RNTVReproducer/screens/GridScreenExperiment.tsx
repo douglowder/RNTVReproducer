@@ -1,7 +1,6 @@
 import { View, Text, FlatList, Pressable, Platform, findNodeHandle } from 'react-native';
 import { useRef } from 'react';
 import { ITEM_HEIGHT, scaleModifier, styles, windowHeight } from '../Styles';
-import { useToast, ToastProvider } from 'react-native-toast-notifications';
 
 interface Measurements {
   x: number
@@ -30,7 +29,6 @@ export const GridScreenExperiment = ({ route, navigation }) => {
   }
 
   return (
-    <ToastProvider>
       <View style={styles.screen}>
         <View onLayout={onContainerLayout} ref={containerRef} style={[{ margin: 40 * scaleModifier, marginLeft: 'auto', marginRight: 'auto', backgroundColor: 'red', height: windowHeight - (80 * scaleModifier), width: 300 * scaleModifier * NUM_COLUMNS }]}>
 
@@ -56,19 +54,15 @@ export const GridScreenExperiment = ({ route, navigation }) => {
           </FlatList>
         </View>
       </View>
-    </ToastProvider>
   )
 }
 
 
 const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
-  // For debugging AndroidTV focus count for physical device (no console)
-  const toast = useToast()
 
   const focusCount = useRef(0)
   const timeoutRef = useRef(null)
   const itemRef = useRef(null)
-
 
   const measureRelativeToFlatList = () => {
     if (itemRef.current && listRef.current) {
@@ -187,13 +181,14 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
             }
           })
 
-          // AndroidTV issue. Reset focusCount after 200ms.
+          // AndroidTV double-focus issue? Reset focusCount after 200ms.
           let startTime: number
           const animate = (timestamp: number) => {
             if (!startTime) startTime = timestamp;
             const elapsed = timestamp - startTime;
             if (elapsed >= 200) {
-              // reset
+              // Reset focusCount 
+              // console.log('onFocus trigger count:', focusCount.current)
               focusCount.current = 0
               timeoutRef.current = null
             } else {
@@ -203,35 +198,7 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
           timeoutRef.current = requestAnimationFrame(animate)
         }
 
-        // ### To visibly prove AndroidTV is firing onFocus twice when running release build on device ... 
-        // if (!timeoutRef.current) {
-        //   // Using animationFrame instead of setTimeout ...
-        //   let startTime: number
-        //   const animate = (timestamp: number) => {
-        //     if (!startTime) startTime = timestamp;
-        //     const elapsed = timestamp - startTime;
-        //     if (elapsed >= 200) { // 200ms timeout
-        //       // check focus count
-        //       console.log('focus was fired x ', focusCount.current)
-        //       toast.hideAll()
-        //       toast.show(`focus was fired x ${focusCount.current}`, {
-        //         type: 'success',
-        //         placement: 'bottom',
-        //         duration: 2000,
-        //         successColor: '#555',
-        //         textStyle: { borderWidth: 4 * scaleModifier, borderColor: 'yellow', padding: 15 * scaleModifier, paddingLeft: 25 * scaleModifier, paddingRight: 25 * scaleModifier, color: 'white', fontSize: 50 * scaleModifier },
-        //         animationType: 'zoom-in',
-        //       })
-        //       focusCount.current = 0
-        //       timeoutRef.current = null
-        //     } else {
-        //       timeoutRef.current = requestAnimationFrame(animate);
-        //     }
-        //   }
-        //   timeoutRef.current = requestAnimationFrame(animate)
-        // }
-        // ## End focus count test
-
+        
       }}
       style={({ pressed, focused }) =>
         focused ? (pressed ? [styles.gridItem, styles.gridItemPress] : [styles.gridItem, styles.gridItemFocus]) : styles.gridItem
