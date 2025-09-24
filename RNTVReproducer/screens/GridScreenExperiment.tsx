@@ -47,7 +47,7 @@ export const GridScreenExperiment = ({ route, navigation }) => {
               return (<GridItem offsetYRef={offsetYRef} containerMeasurements={containerMeasurementsRef} listRef={listRef} props={item} />)
             }}
             getItemLayout={(data, index) => ( // GridItem is height: 180
-              { length: 180 * scaleModifier, offset: 180 * scaleModifier * index, index }
+              { length: 214 * scaleModifier, offset: 214 * scaleModifier * index, index }
             )}
             columnWrapperStyle={{ justifyContent: 'center', alignItems: 'center' }} //, gap: 40 * scaleModifier 
             contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }} //, gap: 40 * scaleModifier 
@@ -127,21 +127,34 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
         focusCount.current = focusCount.current + 1
         if (focusCount.current === 1) {
 
-          console.log(Platform.isTVOS ? 'AppleTV' : 'AndroidTV', 'focus: index:', props.index, 'col:', props?.index % flatlistColumns, 'row:', Math.floor(props.index / flatlistColumns))
+          const row = Math.floor(props.index / flatlistColumns)
+          const column = props?.index % flatlistColumns
+          console.log(Platform.isTVOS ? 'AppleTV' : 'AndroidTV', 'focus: index:', props.index, 'column:', column, 'row:', row)
+
+          // console.log('Current _listRef offset:', listRef?.current?._listRef?._scrollMetrics.offset)
 
           itemRef.current?.measureInWindow((x: number, y: number, width: number, height: number) => {
             // console.log(`Position in Window: x=${x}, y=${y}, width=${width}, height=${height}`)
             const itemRelativePosition:Measurements = {
               x: x - containerMeasurements.current.x,
-              y: y - containerMeasurements.current.y, // We only really care about to detect the focused item being outside the vertical bounds of the container
+              y: y - containerMeasurements.current.y - 1, // hmmm...
               height: height,
               width: width
             }
             
             // console.log(`Relative position to container: x=${itemRelativePosition.x}, y=${itemRelativePosition.y}, width=${width}, height=${height}`)
+            // console.log(`Relative position to window: x=${x}, y=${y}, width=${width}, height=${height}`)
+            // console.log('offsetYRef:', offsetYRef.current)
+
+            const total = listRef.current?.props.data.length
+            const rowCount =  Math.round(total / flatlistColumns)
+            // console.log('rowCount', rowCount)
+            // equates to the property count of listRef.current._listRef._cellRefs
+            // eg: { "1:2:3:4:5:6": [], "7:8:9:10:11:12": [], "13:14:15:16:17:18": [] } is 3 rows.
+            // also listRef.current._listRef._indicesToKeys Map length
 
             // Check bottom edge is in bounds
-            if(itemRelativePosition.y + itemRelativePosition.height > containerMeasurements.current.height){
+            if((itemRelativePosition.y + itemRelativePosition.height) > (containerMeasurements.current.height + containerMeasurements.current.y) ) { //  && row < (Math.floor(total / flatlistColumns) - 1) ensure we ignore the bottom row
               console.log('ITEM IS (partially) OUT OF BOTTOM BOUNDS - SCROLL UP')
 
               offsetYRef.current = offsetYRef.current + (itemRelativePosition.height )
@@ -150,10 +163,17 @@ const GridItem = ({ props, listRef, containerMeasurements, offsetYRef }) => {
                 offset: offsetYRef.current
               })
 
-            } else if(itemRelativePosition.y < itemRelativePosition.height / 2){ // && props.index >= flatlistColumns  ensuring we ignore the top row
-              console.log('ITEM IS (partially) OUT OF TOP BOUNDS = SCROLL DOWN')
+            // } else if((itemRelativePosition.y + containerMeasurements.current.y) < containerMeasurements.current.y){ // && props.index >= flatlistColumns ensuring we ignore the top row
+            } else if( y - 2 < containerMeasurements.current.y &&  offsetYRef.current > 0) { // && props.index >= flatlistColumns ensuring we ignore the top row
 
-              offsetYRef.current = offsetYRef.current - (itemRelativePosition.height  * 1)
+              console.log('ITEM IS (partially) OUT OF TOP BOUNDS = SCROLL DOWN')
+              // console.log('itemRelativePosition.y :', itemRelativePosition.y)
+              // console.log('containerMeasurements.current.y :', containerMeasurements.current.y)
+
+              const _diffY = containerMeasurements.current.y - y + 1
+              // console.log('focused item above top of list by ', _diffY)
+              offsetYRef.current = offsetYRef.current - (itemRelativePosition.height + _diffY )
+
               if(offsetYRef.current < 0){
                 offsetYRef.current = 0
               }
