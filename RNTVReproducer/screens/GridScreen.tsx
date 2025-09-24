@@ -15,7 +15,7 @@ export const GridScreen = ({ route, navigation }) => {
       <FlatList
         style={styles.grid}
         numColumns={6}
-        removeClippedSubviews
+        removeClippedSubviews={false}
         scrollEnabled
         data={testData}
         renderItem={({ item }) => {

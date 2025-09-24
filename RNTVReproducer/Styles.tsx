@@ -84,7 +84,8 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     gridItemFocus: {
-        borderColor: 'yellow'
+        borderColor: 'yellow',
+        backgroundColor: 'blue'
     },
     gridItemPress: {
         borderColor: 'lime',
