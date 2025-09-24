@@ -3,8 +3,6 @@ import { useRef } from 'react';
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { styles } from './Styles';
-
 // Test Screens
 import { HomeScreen } from './screens/HomeScreen'
 import { ScreenOne } from './screens/ScreenOne'
@@ -20,6 +18,7 @@ export default function App() {
   const navigationRef = useRef<NavigationContainerRef<any>>(null);
 
   LogBox.ignoreAllLogs()
+  
   
   return (
     <>
