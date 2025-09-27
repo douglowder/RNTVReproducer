@@ -1,5 +1,5 @@
-import { View, Text, FlatList, Pressable, Platform, findNodeHandle } from 'react-native';
-import { useRef } from 'react';
+import { View, Text, FlatList, Pressable } from 'react-native';
+import { useRef, memo } from 'react';
 import { ITEM_HEIGHT, ITEM_WIDTH, scaleModifier, styles, windowHeight } from '../Styles';
 
 interface Measurements {
@@ -23,6 +23,16 @@ interface Measurements {
 
 import { useEffect } from 'react';
 import { TVEventHandler } from 'react-native';
+
+
+type ShelfItemProp = {
+    item: any
+    navigation?: any
+    containerMeasurements?: any
+    longPressRef?: any
+    listRef?: any
+    focusedItemRef?: any
+}
 
 // longPress up or down hook. emits boolean
 const useTVRemoteLongPress = (onLongPressed: any) => {
@@ -52,8 +62,11 @@ const useTVRemoteLongPress = (onLongPressed: any) => {
 export const GridScreenExperiment = ({ route, navigation }) => {
 
   const NUM_COLUMNS = 6
-  const ITEM_COUNT = 500
+  const ITEM_COUNT = 2000
   const testData = dummyData(ITEM_COUNT)
+
+  const PER_SCREEN = 36 // At the set size, how many items for one 'page'/screen.
+  const WINDOW_SIZE = (Math.ceil(ITEM_COUNT / PER_SCREEN) * 2) + 1 // Without enough 'windows' for all the data, things go awry. (Default: 21)
 
   const listRef = useRef(null)
   const containerRef = useRef(null)
@@ -78,14 +91,15 @@ export const GridScreenExperiment = ({ route, navigation }) => {
           ref={listRef}
           style={styles.grid}
           numColumns={NUM_COLUMNS}
-          removeClippedSubviews={true}
+          removeClippedSubviews={false}
           scrollEnabled={false} // Testing usage of onFocus to set a better scroll position.
           horizontal={false}
-          initialNumToRender={48}
-          windowSize={48 * 3}
+          initialNumToRender={PER_SCREEN}
+          maxToRenderPerBatch={NUM_COLUMNS * 2}
+          windowSize={WINDOW_SIZE}
           data={testData}
           renderItem={({ item }) => {
-            return (<GridItem longPressRef={longPressRef} containerMeasurements={containerMeasurementsRef} listRef={listRef} props={item} />)
+            return (<GridItem longPressRef={longPressRef} containerMeasurements={containerMeasurementsRef} listRef={listRef} item={item} />)
           }}
           getItemLayout={(data, index) => (
             { length: ITEM_HEIGHT * scaleModifier, offset: ITEM_HEIGHT * scaleModifier * index, index }
@@ -100,7 +114,7 @@ export const GridScreenExperiment = ({ route, navigation }) => {
 }
 
 
-const GridItem = ({ props, listRef, containerMeasurements, longPressRef }) => {
+export const GridItem = memo(({ item, listRef, containerMeasurements, longPressRef }: ShelfItemProp) => {
 
   const focusCount = useRef(0)
   const timeoutRef = useRef(null)
@@ -135,9 +149,9 @@ const GridItem = ({ props, listRef, containerMeasurements, longPressRef }) => {
           timeoutRef.current = requestAnimationFrame(animate)
 
           // Position in grid
-          const row = Math.floor(props.index / flatlistColumns)
-          const column = props?.index % flatlistColumns
-          // console.log('focus: index:', props.index, 'column:', column, 'row:', row)
+          const row = Math.floor(item.index / flatlistColumns)
+          const column = item?.index % flatlistColumns
+           console.log('focus: index:', item.index, 'column:', column, 'row:', row)
 
           const currentOffset = listRef?.current?._listRef?._scrollMetrics.offset
 
@@ -157,7 +171,7 @@ const GridItem = ({ props, listRef, containerMeasurements, longPressRef }) => {
                 offset: currentOffset + (height + __diffY)
               })
             }
-            // minus a bit
+            // Check top edge (minus a bit)
             if ((y - 2 < containerMeasurements.current.y) && currentOffset > 0) { // ensuring we deal with the top row
               // console.log('ITEM IS (partially) OUT OF TOP BOUNDS - SCROLL DOWN')
               const _diffY = containerMeasurements.current.y - y + 1
@@ -167,20 +181,19 @@ const GridItem = ({ props, listRef, containerMeasurements, longPressRef }) => {
               })
             }
           })
-
-
         }
-
-
       }}
       style={({ pressed, focused }) =>
-        focused ? (pressed ? [styles.gridItem, styles.gridItemPress] : [styles.gridItem, styles.gridItemFocus]) : styles.gridItem
+        focused ? (pressed ? [styles.gridItem, styles.gridItemPress] : [styles.gridItem, styles.gridItemFocus]) : [styles.gridItem, item.index % 36 === 0 && { backgroundColor: 'green'}]
       }
     >
-      <Text style={styles.gridItemText}>{props.title}</Text>
+      <Text style={styles.gridItemText}>{item.title}</Text>
+      {
+        item.index % 36 === 0 && <Text style={[styles.gridItemText, {fontSize: 26 * scaleModifier}]}>{ `page: ${Math.round(item.index / 36)}` }</Text>
+      }
     </Pressable>
   )
-}
+})
 
 const dummyData = (length: number) => {
   return Array.from({ length }, (_, i) => ({

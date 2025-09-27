@@ -3,7 +3,14 @@ import { useEffect, useRef, useState } from 'react';
 import { scaleModifier, styles } from '../Styles';
 import { MenuButton } from '../components/MenuButton';
 
+import { useTVRemoteLongPress } from '../hooks/useTVLongPress';
+
 export const HomeScreen = ({ route, navigation }) => {
+
+    useTVRemoteLongPress((longPressed: boolean, type: string) => {
+        console.log(`longPress: ${longPressed ? 'keydown' : 'keyup'} - type: ${type}`)
+        // do things ...
+    })
 
     const testCallback = (data: any) => {
         console.log(data)
@@ -38,10 +45,10 @@ export const HomeScreen = ({ route, navigation }) => {
         //     callback: testCallback, // Console log ..
         //     focusable: true
         // },
-        // {
-        //     title: 'Should be Disabled',
-        //     focusable: false // Will set focusable to false
-        // }
+        {
+            title: 'Disabled',
+            focusable: false // Will set focusable to false
+        }
 
     ]
 
