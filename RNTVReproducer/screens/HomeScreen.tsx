@@ -23,23 +23,23 @@ export const HomeScreen = ({ route, navigation }) => {
         //     action: 'nav:ScreenOne', // Navigate to 'ScreenOne'
         //     focusable: true,
         // },
+        {
+            title: 'VideoView focus issue',
+            action: 'nav:ScreenTwo', // Navigate to 'ScreenTwo'
+            focusable: true,
+        },
         // {
-        //     title: 'Two',
-        //     action: 'nav:ScreenTwo', // Navigate to 'ScreenTwo'
+        //     title: 'Normal Scrollable FlatList',
+        //     action: 'nav:GridScreen', // Navigates to 'GridScreen'
         //     focusable: true,
+        //     hasPreferredFocus: true
         // },
-        {
-            title: 'Normal Scrollable FlatList',
-            action: 'nav:GridScreen', // Navigates to 'GridScreen'
-            focusable: true,
-            hasPreferredFocus: true
-        },
-        {
-            title: 'FlatList Scroll Experiment',
-            action: 'nav:GridScreenExperiment', // Navigates to 'GridScreenExperiment'
-            focusable: true,
-            hasPreferredFocus: true
-        },
+        // {
+        //     title: 'FlatList Scroll Experiment',
+        //     action: 'nav:GridScreenExperiment', // Navigates to 'GridScreenExperiment'
+        //     focusable: true,
+        //     hasPreferredFocus: true
+        // },
         // {
         //     title: 'Callback',
         //     callback: testCallback, // Console log ..
