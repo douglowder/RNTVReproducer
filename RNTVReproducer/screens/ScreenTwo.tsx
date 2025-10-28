@@ -19,8 +19,7 @@ export const ScreenTwo = ({ route, navigation }) => {
                 )}
             </Pressable>
             
-            {/* Add this to fix the issue:  destinations={[]} */}
-            <TVFocusGuideView autoFocus focusable={false}>
+            <TVFocusGuideView focusable={false}>
                 <VideoView style={{ marginTop: 20, height: 300, width: 500, backgroundColor: '#333333' }} player={player} focusable={false} nativeControls={false} />
             </TVFocusGuideView>
 
