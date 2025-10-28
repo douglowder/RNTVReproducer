@@ -1,13 +1,24 @@
 # React Native TV : Demo / Reproducer App
 
-### FlatList as grid, scroll & focus experiments.
+### expo-video VideoView not respecting focusable
 
-See: https://github.com/react-native-tvos/react-native-tvos/issues/848#issuecomment-3325060435
+See: https://github.com/react-native-tvos/react-native-tvos/issues/1010#issuecomment-3454147933
 
-This FlatList (with scrollEnabled:false) will now scroll and focus on AndroidTV in the same way that tvOS does with a normal scrollable FlatList.
+- Select the 'VideoView focus issue' option
+- Remote up and down to see if the VideoView receives focus between the two Pressables.
+- Go back to home screen.
+- Return to 'VideoView focus issue' option
+- Test remote up and down again. 
 
-When the focused item rect breaks out of the boundary of the list container, it will use .scrollToOffset to keep
-the iten in view, also providing an item height's space until the top and bottom rows, as tvOS does.
+#### Result: 
 
-See `screens/GridScreenExperiment.tsx`
+- First visit to screen acts as expected since `autoFocus` was added. 
+- Second visit shows VideoView receiving focus. 
+
+#### Solution: 
+
+- Add `destinations={[]}` to the TVFocusGuideView wrapper 
+- Now works as expected on subsequent visits to the screen.
+
+See `screens/ScreenTwo.tsx`
 
