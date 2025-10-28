@@ -1,20 +1,20 @@
 import { View, Text, TVFocusGuideView } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
+// import { useEffect, useRef, useState } from 'react';
 import { scaleModifier, styles } from '../Styles';
 import { MenuButton } from '../components/MenuButton';
 
-import { useTVRemoteLongPress } from '../hooks/useTVLongPress';
+// import { useTVRemoteLongPress } from '../hooks/useTVLongPress';
 
 export const HomeScreen = ({ route, navigation }) => {
 
-    useTVRemoteLongPress((longPressed: boolean, type: string) => {
-        console.log(`longPress: ${longPressed ? 'keydown' : 'keyup'} - type: ${type}`)
-        // do things ...
-    })
+    // useTVRemoteLongPress((longPressed: boolean, type: string) => {
+    //     console.log(`longPress: ${longPressed ? 'keydown' : 'keyup'} - type: ${type}`)
+    //     // do things ...
+    // })
 
-    const testCallback = (data: any) => {
-        console.log(data)
-    }
+    // const testCallback = (data: any) => {
+    //     console.log(data)
+    // }
 
     // Test buttons for demos..
     const buttonsData: any = [
