@@ -15,6 +15,14 @@
             "topShelfWide2x": "./assets/images/icon-4640x1440.png"
           }
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "buildReactNativeFromSource": true
+          }
+        }
       ]
     ],
     "android": {
