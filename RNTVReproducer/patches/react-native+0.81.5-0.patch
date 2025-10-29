@@ -26,3 +26,26 @@ index 439de05..5f4f4d0 100644
        // tvOS only prop
        isTVSelectable={tvOSSelectable}
        // Android TV only prop
+diff --git a/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/views/view/ReactViewManager.kt b/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/views/view/ReactViewManager.kt
+index 2a66c64..56f982b 100644
+--- a/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/views/view/ReactViewManager.kt
++++ b/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/views/view/ReactViewManager.kt
+@@ -108,7 +108,7 @@ public open class ReactViewManager : ReactClippingViewManager<ReactViewGroup>()
+       view.isFocusable = false
+       view.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
+     } else {
+-      view.descendantFocusability = ViewGroup.FOCUS_BEFORE_DESCENDANTS
++      view.descendantFocusability = ViewGroup.FOCUS_AFTER_DESCENDANTS
+     }
+   }
+ 
+@@ -395,8 +395,7 @@ public open class ReactViewManager : ReactClippingViewManager<ReactViewGroup>()
+     } else {
+       view.setOnClickListener(null)
+       view.isClickable = false
+-      // Don't set view.setFocusable(false) because we might still want it to be focusable for
+-      // accessibility reasons
++      view.isFocusable = false
+     }
+     // This is required to handle Android TV/ Fire TV Devices that are Touch Enabled as well as LeanBack
+     // https://developer.android.com/reference/android/view/View#requestFocus(int,%20android.graphics.Rect)
