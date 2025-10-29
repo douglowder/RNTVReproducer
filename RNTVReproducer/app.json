@@ -21,6 +21,9 @@
         {
           "ios": {
             "buildReactNativeFromSource": true
+          },
+          "android": {
+            "buildReactNativeFromSource": true
           }
         }
       ]
