@@ -49,3 +49,16 @@ index 2a66c64..56f982b 100644
      }
      // This is required to handle Android TV/ Fire TV Devices that are Touch Enabled as well as LeanBack
      // https://developer.android.com/reference/android/view/View#requestFocus(int,%20android.graphics.Rect)
+diff --git a/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/views/textinput/ReactEditText.kt b/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/views/textinput/ReactEditText.kt
+index ffaf27c..c388c2e 100644
+--- a/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/views/textinput/ReactEditText.kt
++++ b/node_modules/react-native/ReactAndroid/src/main/java/com/facebook/react/views/textinput/ReactEditText.kt
+@@ -413,7 +413,7 @@ public open class ReactEditText public constructor(context: Context) : AppCompat
+   // that. This method will eventually replace requestFocusInternal()
+   private fun requestFocusProgrammatically(): Boolean {
+     val focused = super.requestFocus(FOCUS_DOWN, null)
+-    if (isInTouchMode && showSoftInputOnFocus) {
++    if (showSoftInputOnFocus) {
+       showSoftKeyboard()
+     } else {
+       if (isKeyboardOpened) {
