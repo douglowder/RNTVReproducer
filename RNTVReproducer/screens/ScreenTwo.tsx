@@ -5,13 +5,16 @@ import {
   Pressable,
   TouchableOpacity,
   TextInput,
+  TVFocusGuideView,
 } from 'react-native';
 
 export const ScreenTwo = ({ route, navigation }) => {
   // Testing expo-video focusable issue ...
   // https://github.com/react-native-tvos/react-native-tvos/issues/1010#issuecomment-3454147933
-  const textInputRef = useRef<TextInput>(null);
-  const [textInputValue, setTextInputValue] = useState('');
+  const textInputRef1 = useRef<TextInput>(null);
+  const textInputRef2 = useRef<TextInput>(null);
+  const [textInputValue1, setTextInputValue1] = useState('');
+  const [textInputValue2, setTextInputValue2] = useState('');
 
   return (
     <View style={{ display: 'flex', padding: 20 }}>
@@ -38,24 +41,23 @@ export const ScreenTwo = ({ route, navigation }) => {
           height: 100,
         }}
         onPress={() => {
-          textInputRef.current?.focus();
+          textInputRef1.current?.focus();
         }}
       >
         <View>
           <TextInput
-            ref={textInputRef}
-            showSoftInputOnFocus={true}
+            ref={textInputRef1}
             onFocus={() => console.log('TextInput is focused')}
             onBlur={() => console.log('TextInput is not focused')}
             placeholder="Enter a value"
-            value={textInputValue}
+            value={textInputValue1}
             style={{ color: 'red', height: 50 }}
             placeholderTextColor="#0000ff"
             onChange={(value: any) => {
-              setTextInputValue(value.nativeEvent.text);
+              setTextInputValue1(value.nativeEvent.text);
             }}
             onSubmitEditing={(value: any) => {
-              setTextInputValue(value.nativeEvent.text);
+              setTextInputValue1(value.nativeEvent.text);
               console.log(value.nativeEvent.text);
             }}
           />
@@ -63,16 +65,17 @@ export const ScreenTwo = ({ route, navigation }) => {
       </TouchableOpacity>
       <Text>Unwrapped input</Text>
       <TextInput
+        ref={textInputRef2}
         showSoftInputOnFocus={true}
         placeholder="Enter a value"
-        value={textInputValue}
-        style={{ color: 'red', height: 50 }}
+        value={textInputValue2}
+        style={{ color: 'green', height: 50 }}
         placeholderTextColor="#0000ff"
         onChange={(value: any) => {
-          setTextInputValue(value.nativeEvent.text);
+          setTextInputValue2(value.nativeEvent.text);
         }}
         onSubmitEditing={(value: any) => {
-          setTextInputValue(value.nativeEvent.text);
+          setTextInputValue2(value.nativeEvent.text);
           console.log(value.nativeEvent.text);
         }}
       />
